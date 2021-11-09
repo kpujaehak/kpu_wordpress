@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('KPU: Hello world!!');
 });
 
 app.get('/users', (req, res) => {
@@ -11,9 +11,9 @@ app.get('/users', (req, res) => {
   const client = new Client({
     host: process.env.EXPRESS_DB_HOST || 'localhost',
     port: process.env.EXPRESS_DB_PORT || '5432',
-    database: process.env.EXPRESS_DB_NAME || 'nodesample',
-    user: process.env.EXPRESS_DB_USER || 'testuser',
-    password: process.env.EXPRESS_DB_PASSWORD || 'secret!@password',
+    database: process.env.EXPRESS_DB_NAME || 'kpu_db',
+    user: process.env.EXPRESS_DB_USER || 'kpu',
+    password: process.env.EXPRESS_DB_PASSWORD || 'kpu1234',
   });
 
   client.connect((err) => {

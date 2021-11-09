@@ -7,26 +7,29 @@ volumes:
 services:
   db:
     image: postgres:9.6.1
+    container_name: kpu_db_e
     volumes:
       - express_sample_db_dev:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=sampledb
-      - POSTGRES_USER=sampleuser
-      - POSTGRES_PASSWORD=samplesecret
+      - POSTGRES_DB=kpu_db
+      - POSTGRES_USER=kpu
+      - POSTGRES_PASSWORD=kpu1234
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8
     healthcheck:
       test: "pg_isready -h localhost -p 5432 -U postgres"
-      interval: 3s
-      timeout: 1s
-      retries: 10
-
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+      
   express:
     build:
       context: .
       dockerfile: ./compose/express/Dockerfile-dev
+    container_name: kpu_web_e
     command: /start-dev.sh
     ports:
-      - "3000:3000"
+      - "5001:3000"
     volumes:
       - ./src:/app/src
       - ./package.json:/app/package.json
@@ -34,11 +37,12 @@ services:
     environment:
       - EXPRESS_DB_HOST=postgres
       - EXPRESS_DB_PORT=5432
-      - EXPRESS_DB_NAME=sampledb
-      - EXPRESS_DB_USER=sampleuser
-      - EXPRESS_DB_PASSWORD=samplesecret
+      - EXPRESS_DB_NAME=kpu_db
+      - EXPRESS_DB_USER=kpu
+      - EXPRESS_DB_PASSWORD=kpu1234
     depends_on:
       db:
         condition: service_healthy
     links:
       - db:postgres
+      
