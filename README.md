@@ -1,5 +1,5 @@
 
-1. git clone https://github.com/kpujaehak/kpu_wordpress.git
+1. git clone https://github.com/kpujaehak/kpu_wordpress
 2. cd kpu_wordpress
 3. docker-compose up
 
